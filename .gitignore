@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+.venv/
+venv/
+
+# Dataset
+data/raw/
+data/processed/
+
+# YOLO Training
+runs/
+
+# Model Weights
+*.pt
