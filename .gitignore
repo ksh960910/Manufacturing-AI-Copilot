@@ -15,3 +15,6 @@ runs/
 
 # Model Weights
 *.pt
+
+# API Key
+.env
