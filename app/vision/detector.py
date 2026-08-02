@@ -1,7 +1,15 @@
+from pathlib import Path
 from ultralytics import YOLO
 
-model = YOLO("yolo11n.pt")
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
+MODEL_PATH = PROJECT_ROOT / 'models' / 'trained' / 'best.pt'
+
+if MODEL_PATH.exists():
+    model = YOLO(str(MODEL_PATH))
+else:
+    # use pretrained model
+    model = YOLO('yolo11n.pt')
 
 def detect_objects(image_path: str) -> list:
     """
