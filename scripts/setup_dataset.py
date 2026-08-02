@@ -29,8 +29,8 @@ def get_api_key():
 def download_dataset(api_key):
 
     rf = Roboflow(api_key=api_key)
-    project = rf.workspace(os.getenv('ROBOFLOW_WORKSPACE')).project("pcb-defect-uqoat")
-    dataset = project.version(2).download("yolov11")
+    project = rf.workspace(os.getenv('ROBOFLOW_WORKSPACE')).project('pcb-defect-uqoat')
+    dataset = project.version(2).download('yolov11')
 
     downloaded_path = Path(dataset.location)
 
@@ -41,13 +41,13 @@ def download_dataset(api_key):
 def main():
 
     if PCB_ROOT.exists():
-        print("Dataset already exists.")
+        print('Dataset already exists.')
         return
     else:
         api_key = get_api_key()
         download_dataset(api_key)
 
-        print("Dataset setup completed.")
+        print('Dataset setup completed.')
 
 if __name__=='__main__':
     main()
