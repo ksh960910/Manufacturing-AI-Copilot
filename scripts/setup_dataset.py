@@ -18,10 +18,10 @@ def get_api_key():
 
     load_dotenv()
 
-    api_key = os.getenv("ROBOFLOW_API_KEY")
+    api_key = os.getenv('ROBOFLOW_API_KEY')
 
     if api_key is None:
-        raise ValueError("ROBOFLOW_API_KEY not found.")
+        raise ValueError('ROBOFLOW_API_KEY not found.')
 
     return api_key
 
@@ -29,7 +29,7 @@ def get_api_key():
 def download_dataset(api_key):
 
     rf = Roboflow(api_key=api_key)
-    project = rf.workspace("test-yylx4").project("pcb-defect-uqoat")
+    project = rf.workspace(os.getenv('ROBOFLOW_WORKSPACE')).project("pcb-defect-uqoat")
     dataset = project.version(2).download("yolov11")
 
     downloaded_path = Path(dataset.location)
