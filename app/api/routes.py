@@ -1,8 +1,10 @@
 from pathlib import Path
-
 from fastapi import APIRouter, UploadFile, File
 
 from app.vision.detector import detect_objects
+from app.analyzer.defect_analyzer import analyze_defects
+
+# uvicorn app.main:app --reload
 
 router = APIRouter()
 
@@ -20,10 +22,11 @@ async def detect(file: UploadFile = File(...)):
             f.write(await file.read())
 
         detections = detect_objects(str(image_path))
+        summary = analyze_defects(detections)
 
         return {
             "image": file.filename,
-            "total_defects": len(detections),
+            "summary": summary,
             "detections": detections
         }
     finally:
