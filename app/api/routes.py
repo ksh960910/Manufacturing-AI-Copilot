@@ -15,13 +15,22 @@ async def detect(file: UploadFile = File(...)):
 
     image_path = temp_dir / file.filename
 
-    with open(image_path, "wb") as f:
-        f.write(await file.read())
+    try:
+        with open(image_path, "wb") as f:
+            f.write(await file.read())
 
-    detections = detect_objects(str(image_path))
+        detections = detect_objects(str(image_path))
 
-    return {
-        "image": file.filename,
-        "total_defects": len(detections),
-        "detections": detections
-    }
+        return {
+            "image": file.filename,
+            "total_defects": len(detections),
+            "detections": detections
+        }
+    finally:
+        image_path.unlink(missing_ok=True)
+
+        try:
+            temp_dir.rmdir()
+        except OSError:
+            # 다른 요청의 파일이 남아 있으면 폴더는 유지
+            pass
