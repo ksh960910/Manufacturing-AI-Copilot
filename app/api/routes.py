@@ -3,6 +3,7 @@ from fastapi import APIRouter, UploadFile, File
 
 from app.vision.detector import detect_objects
 from app.analyzer.defect_analyzer import analyze_defects
+from app.analyzer.report_generator import generate_report
 
 # uvicorn app.main:app --reload
 
@@ -24,9 +25,15 @@ async def detect(file: UploadFile = File(...)):
         detections = detect_objects(str(image_path))
         analysis = analyze_defects(detections)
 
+        report = generate_report(
+            file.filename,
+            analysis,
+        )
+
         return {
             "image": file.filename,
             **analysis,
+            "report" : report,
         }
     finally:
         image_path.unlink(missing_ok=True)

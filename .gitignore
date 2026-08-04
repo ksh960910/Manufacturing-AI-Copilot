@@ -18,3 +18,6 @@ runs/
 
 # API Key
 .env
+
+# codex context
+PROJECT_CONTEXT.md
