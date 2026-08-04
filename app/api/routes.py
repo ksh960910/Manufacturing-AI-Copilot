@@ -22,12 +22,11 @@ async def detect(file: UploadFile = File(...)):
             f.write(await file.read())
 
         detections = detect_objects(str(image_path))
-        summary = analyze_defects(detections)
+        analysis = analyze_defects(detections)
 
         return {
             "image": file.filename,
-            "summary": summary,
-            "detections": detections
+            **analysis,
         }
     finally:
         image_path.unlink(missing_ok=True)
